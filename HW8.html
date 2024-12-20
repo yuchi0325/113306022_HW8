@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin: 10px 0;
+        }
+        label {
+            display: block;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+        input[type="number"], select {
+            padding: 10px;
+            margin: 5px;
+            width: 120px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: brown;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: brown;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>JS Calculator</h1>
+    <div class="form-group">
+        <label for="num1">Number 1</label>
+        <input type="number" id="num1">
+    </div>
+    <div class="form-group">
+        <label for="num2">Number 2</label>
+        <input type="number" id="num2">
+    </div>
+    <div class="form-group">
+        <label for="operator">Operate Way?</label>
+        <select id="operator" onchange="updateButtonText()">
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="*">*</option>
+            <option value="/">/</option>
+        </select>
+    </div>
+    <button id="calculateButton" onclick="calculate()">Add</button>
+    <div id="result">Result = </div>
+
+    <script>
+        
+        function updateButtonText() {
+            const operator = document.getElementById("operator").value;
+            const button = document.getElementById("calculateButton");
+
+            switch (operator) {
+                case "+":
+                    button.innerText = "Add";
+                    break;
+                case "-":
+                    button.innerText = "Subtract";
+                    break;
+                case "*":
+                    button.innerText = "Multiply";
+                    break;
+                case "/":
+                    button.innerText = "Divide";
+                    break;
+                default:
+                    button.innerText = "Calculate";
+            }
+        }
+
+       
+        function calculate() {
+            const num1 = parseFloat(document.getElementById("num1").value);
+            const num2 = parseFloat(document.getElementById("num2").value);
+            const operator = document.getElementById("operator").value;
+
+            
+            if (isNaN(num1) || isNaN(num2)) {
+                document.getElementById("result").innerText = "Result = Invalid input. Please enter valid numbers.";
+                return;
+            }
+
+            let result;
+
+            
+            if (operator === "+") {
+                result = num1 + num2;
+            } else if (operator === "-") {
+                result = num1 - num2;
+            } else if (operator === "*") {
+                result = num1 * num2;
+            } else if (operator === "/") {
+                if (num2 === 0) {
+                    document.getElementById("result").innerText = "Result = Error: Division by zero.";
+                    return;
+                }
+                result = num1 / num2;
+            } else {
+                document.getElementById("result").innerText = "Result = Invalid operator.";
+                return;
+            }
+
+            
+            document.getElementById("result").innerText = `Result = ${result.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>
